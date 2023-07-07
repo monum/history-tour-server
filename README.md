@@ -12,6 +12,6 @@ T Tours is an audio tour application that highlights sites visible from MBTA's (
 
 `history-tour-server` is used to maintain the backend APIs and the infrastructure stack for the T Tours application.
 
-## Architecture
+
 
 
