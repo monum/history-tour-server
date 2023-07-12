@@ -1,14 +1,14 @@
-import json
 import boto3
 from boto3.dynamodb.types import TypeDeserializer
+
+import json
 
 dynamodb = boto3.client('dynamodb')
 deserializer = TypeDeserializer()
 
-
 def handler(event, context):
-    routeName = ""
-    responseCode = 200
+    route_name = ""
+    response_code = 200
 
     print("request: " + json.dumps(event))
 
@@ -16,18 +16,18 @@ def handler(event, context):
 
     if (event["queryStringParameters"] and event["queryStringParameters"]["routeName"]):
         print("Received query: " + event["queryStringParameters"]["routeName"])
-        routeName = event["queryStringParameters"]["routeName"]
+        route_name = event["queryStringParameters"]["routeName"]
 
         # todo - update TableName
         db_response = dynamodb.get_item(
             TableName = "HistoryTourServerAppStack-RouteTableTest64965DD4-1FJF389OM46QH", 
             Key={
-                'routeName': {'S': routeName}
+                'routeName': {'S': route_name}
             }
         )
 
         document = db_response['Item']
-        print(document)
+        #print(document)
         deserialized_document = {k: deserializer.deserialize(v) for k, v in document.items()}
         response_body = deserialized_document
     else:
@@ -35,7 +35,7 @@ def handler(event, context):
         response_body = {"message": message, "input": event}
 
     response = {
-            "statusCode": responseCode,
+            "statusCode": response_code,
             "headers": {
                 "Content-Type" : "application/json"
             },
