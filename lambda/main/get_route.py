@@ -27,7 +27,7 @@ def handler(event, context):
         )
 
         document = db_response['Item']
-        #print(document)
+        print(document)
         deserialized_document = {k: deserializer.deserialize(v) for k, v in document.items()}
         response_body = deserialized_document
     else:

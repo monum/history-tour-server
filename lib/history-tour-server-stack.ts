@@ -38,7 +38,7 @@ export class HistoryTourServerStack extends Stack {
     const api = new apigateway.RestApi(this, 'history-tour-main-api', {
       description: 'API endpoint for history-tour main application.',
       defaultCorsPreflightOptions: { 
-        allowOrigins: apigateway.Cors.ALL_ORIGINS } //TODO:update
+        allowOrigins: apigateway.Cors.ALL_ORIGINS } 
     });
 
     // create get_route lambda function
@@ -47,9 +47,14 @@ export class HistoryTourServerStack extends Stack {
       code: lambda.Code.fromAsset('lambda/main'),
       handler: 'get_route.handler'                
     });
+
+    // path name https://{createdId}.execute-api.{region}.amazonaws.com/prod/getroute
+    const getRoutePath = api.root.addResource('getroute'); 
+    getRoutePath.addMethod('GET', new apigateway.LambdaIntegration(getroute));
+
     // grant dynamodb read permissions
     routeTable.grantReadData(getroute);
 
-    //TODO - add rest of lambda functions
+    //TODO: add rest of lambda functions and their paths
   }
 }
