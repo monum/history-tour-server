@@ -3,6 +3,7 @@ from boto3.dynamodb.types import TypeDeserializer
 
 import json
 from os import path
+import sys
 from math import radians, cos, sin, asin, sqrt
 
 from get_route import generate_presigned_url
@@ -70,7 +71,7 @@ def handler(event, context):
 
         for tour in range(0, len(deserialized_route["tourStops"])):
             tour_coordinates = deserialized_route["tourStops"][tour]["gpsCoordinates"]
-            min_distance = 1.00
+            min_distance = sys.maxsize
             min_distance_index = 0
 
             center_lat = float(tour_coordinates["latitude"])

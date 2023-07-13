@@ -68,7 +68,7 @@ export class HistoryTourServerStack extends Stack {
     getTourStopPath.addMethod('GET', new apigateway.LambdaIntegration(getTourStop));
 
     const getTourPath = api.root.addResource('get-tour'); 
-    getTourStopPath.addMethod('GET', new apigateway.LambdaIntegration(getTour));
+    getTourPath.addMethod('GET', new apigateway.LambdaIntegration(getTour));
 
     // grant dynamodb read permissions
     routeTable.grantReadData(getRoute);
