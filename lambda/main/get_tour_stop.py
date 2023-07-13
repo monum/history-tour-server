@@ -85,16 +85,10 @@ def handler(event, context):
         generate_presigned_url_tour_stop(closest_tour)
 
         response_body = closest_tour
-        response = {
-            "statusCode": response_code,
-            "headers": {
-                "Content-Type" : "application/json"
-            },
-            "body": json.dumps(response_body)
-        }
+    else:
+        message = "Please input valid parameters"
+        response_body = {"message": message, "input": event}
     
-    message = "Please input valid parameters"
-    response_body = {"message": message, "input": event}
     response = {
         "statusCode": response_code,
         "headers": {

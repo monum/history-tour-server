@@ -49,9 +49,15 @@ export class HistoryTourServerStack extends Stack {
     });
 
     const getTourStop = new lambda.Function(this, 'GetTourStopHandler', {
-      runtime: lambda.Runtime.PYTHON_3_7,    // execution environment
+      runtime: lambda.Runtime.PYTHON_3_7,    
       code: lambda.Code.fromAsset('lambda/main'),
       handler: 'get_tour_stop.handler'                
+    });
+
+    const getTour = new lambda.Function(this, 'GetTourHandler', {
+      runtime: lambda.Runtime.PYTHON_3_7,    
+      code: lambda.Code.fromAsset('lambda'),  
+      handler: 'get_tour.handler'                
     });
 
     // path name https://{createdId}.execute-api.{region}.amazonaws.com/prod/get-route
@@ -61,9 +67,13 @@ export class HistoryTourServerStack extends Stack {
     const getTourStopPath = api.root.addResource('get-tour-stop'); 
     getTourStopPath.addMethod('GET', new apigateway.LambdaIntegration(getTourStop));
 
+    const getTourPath = api.root.addResource('get-tour'); 
+    getTourStopPath.addMethod('GET', new apigateway.LambdaIntegration(getTour));
+
     // grant dynamodb read permissions
     routeTable.grantReadData(getRoute);
     routeTable.grantReadData(getTourStop);
+    routeTable.grantReadData(getTour);
 
 
 
