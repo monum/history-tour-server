@@ -42,19 +42,32 @@ export class HistoryTourServerStack extends Stack {
     });
 
     // create get_route lambda function
-    const getroute = new lambda.Function(this, 'GetRouteHandler', {
+    const getRoute = new lambda.Function(this, 'GetRouteHandler', {
       runtime: lambda.Runtime.PYTHON_3_7,    // execution environment
       code: lambda.Code.fromAsset('lambda/main'),
       handler: 'get_route.handler'                
     });
 
-    // path name https://{createdId}.execute-api.{region}.amazonaws.com/prod/getroute
-    const getRoutePath = api.root.addResource('getroute'); 
-    getRoutePath.addMethod('GET', new apigateway.LambdaIntegration(getroute));
+    const getTourStop = new lambda.Function(this, 'GetTourStopHandler', {
+      runtime: lambda.Runtime.PYTHON_3_7,    // execution environment
+      code: lambda.Code.fromAsset('lambda/main'),
+      handler: 'get_tour_stop.handler'                
+    });
+
+    // path name https://{createdId}.execute-api.{region}.amazonaws.com/prod/get-route
+    const getRoutePath = api.root.addResource('get-route'); 
+    getRoutePath.addMethod('GET', new apigateway.LambdaIntegration(getRoute));
+
+    const getTourStopPath = api.root.addResource('get-tour-stop'); 
+    getTourStopPath.addMethod('GET', new apigateway.LambdaIntegration(getTourStop));
 
     // grant dynamodb read permissions
-    routeTable.grantReadData(getroute);
+    routeTable.grantReadData(getRoute);
+    routeTable.grantReadData(getTourStop);
+
+
 
     //TODO: add rest of lambda functions and their paths
+
   }
 }

@@ -13,7 +13,7 @@ s3 = boto3.client('s3')
 deserializer = TypeDeserializer()
 
 BUCKET = "history-tour-server-tourassetssbucketb8884501-1tv88uba51ic2"
-TABLE = "HistoryTourServerAppStack-RouteTableTest64965DD4-1FJF389OM46QH"
+TABLE = "HistoryTourServerAppStack-RouteTable64965DD4-1FJF389OM46QH"
 
 def generate_presigned_url(s3_client, client_method, method_parameters, expires_in):
     """
@@ -48,20 +48,19 @@ def generate_presigned_url(s3_client, client_method, method_parameters, expires_
         raise
     return url
 
-
 def generate_presigned_urls_for_route(deserialized_route):
-    for tour in range(0,len(deserialized_route["tourStops"])):
-        current_stop = deserialized_route["tourStops"][tour]
+    for tour_stop in range(0,len(deserialized_route["tourStops"])):
+        current_stop = deserialized_route["tourStops"][tour_stop]
         parameters = { "Bucket": BUCKET }
 
         for image in range(0,len(current_stop["images"])):
             parameters["Key"] = path.join("images", current_stop["images"][image])
             presigned_url = generate_presigned_url(s3, 'get_object', parameters, 1000)
-            deserialized_route["tourStops"][tour]["images"][image] = presigned_url
+            deserialized_route["tourStops"][tour_stop]["images"][image] = presigned_url
     
-        parameters["Key"] = path.join("images", current_stop["audioFile"])
+        parameters["Key"] = path.join("audio", current_stop["audioFile"])
         presigned_url_audio = generate_presigned_url(s3, 'get_object', parameters, 1000)
-        deserialized_route["tourStops"][tour]["audioFile"] = presigned_url_audio
+        deserialized_route["tourStops"][tour_stop]["audioFile"] = presigned_url_audio
     return deserialized_route
     
 def handler(event, context):
@@ -74,7 +73,7 @@ def handler(event, context):
         print("Received query: " + event["queryStringParameters"]["routeName"])
         route_name = event["queryStringParameters"]["routeName"]
 
-        # todo - update TableName
+        
         db_response = dynamodb.get_item(
             TableName = TABLE, 
             Key={
