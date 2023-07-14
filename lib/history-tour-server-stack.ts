@@ -11,12 +11,12 @@ export class HistoryTourServerStack extends Stack {
     super(scope, id, props);
 
     //create s3 buckets
-    new s3.Bucket(this, 'TourAssetsBucket', {
+    const tourAssetsBucket = new s3.Bucket(this, 'TourAssetsBucket', {
       versioned: true,
 
     });
     
-    new s3.Bucket(this, 'UnapprovedStoryAssetsBucket', {
+    const unapprovedStoryAssetsBucket = new s3.Bucket(this, 'UnapprovedStoryAssetsBucket', {
       versioned: true,
 
     });
@@ -95,6 +95,12 @@ export class HistoryTourServerStack extends Stack {
     routeTable.grantReadData(getTour);
     routeTable.grantReadData(toursNearLocation);
     routeTable.grantReadData(routeSearch);
+
+    tourAssetsBucket.grantRead(getRoute);
+    tourAssetsBucket.grantRead(getTourStop);
+    tourAssetsBucket.grantRead(getTour);
+    tourAssetsBucket.grantRead(toursNearLocation);
+    tourAssetsBucket.grantRead(routeSearch);
 
 
 

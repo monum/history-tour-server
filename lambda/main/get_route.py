@@ -64,7 +64,6 @@ def generate_presigned_urls_for_route(deserialized_route):
     return deserialized_route
     
 def handler(event, context):
-    route_name = ""
     response_code = 200
 
     print("request: " + json.dumps(event))
