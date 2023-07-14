@@ -56,19 +56,19 @@ export class HistoryTourServerStack extends Stack {
 
     const getTour = new lambda.Function(this, 'GetTourHandler', {
       runtime: lambda.Runtime.PYTHON_3_7,    
-      code: lambda.Code.fromAsset('lambda'),  
+      code: lambda.Code.fromAsset('lambda/main'),  
       handler: 'get_tour.handler'                
     });
 
     const toursNearLocation = new lambda.Function(this, 'ToursNearLocationHandler', {
       runtime: lambda.Runtime.PYTHON_3_7,    
-      code: lambda.Code.fromAsset('lambda'),  
+      code: lambda.Code.fromAsset('lambda/main'),  
       handler: 'tours_near_location.handler'                
     });
 
     const routeSearch = new lambda.Function(this, 'RouteSearchHandler', {
       runtime: lambda.Runtime.PYTHON_3_7,    
-      code: lambda.Code.fromAsset('lambda'),  
+      code: lambda.Code.fromAsset('lambda/main'),  
       handler: 'route_search.handler'                
     });
 
