@@ -66,7 +66,7 @@ def handler(event, context):
             }
         )
 
-        route = db_response['item']
+        route = db_response['Item']
         deserialized_route = {k: deserializer.deserialize(v) for k, v in route.items()}
 
         for tour in range(0, len(deserialized_route["tourStops"])):
