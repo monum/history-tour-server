@@ -55,9 +55,9 @@ def handler(event, context):
 
     if (event["queryStringParameters"] and event["queryStringParameters"]["latitude"] and 
         event["queryStringParameters"]["longitude"]):
-        lat = event["queryStringParameters"]["latitude"]
-        lon = event["queryStringParameters"]["longitude"] 
-        print("Received query: " + "lat : " + lat + "," + "lon: " + lon )
+        lat = float(event["queryStringParameters"]["latitude"])
+        lon = float(event["queryStringParameters"]["longitude"]) 
+        print("Received query: " + "lat : " + str(lat) + "," + "lon: " + str(lon) )
 
         db_response = dynamodb.get_item(
             TableName = TABLE,
