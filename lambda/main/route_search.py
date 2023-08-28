@@ -30,11 +30,8 @@ def handler(event, context):
         )
 
         routes = db_response["Items"]
-        
         for route in range(0,len(routes)):
-            db_response["Items"][route] = {k: deserializer.deserialize(v) for k, v in routes[route].items()}
-    
-        for route in range(0,len(routes)):
+            routes[route] = {k: deserializer.deserialize(v) for k, v in routes[route].items()}
             routes[route] = generate_presigned_urls_for_route(routes[route])
         response_body = {"routes":routes}
     else:
