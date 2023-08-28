@@ -46,7 +46,7 @@ def handler(event, context):
 
         top_three_routes = sorted(closest_routes.items(), key=lambda x: x[1])[:3]
         result = []
-        for k,v in top_three_routes.items():
+        for k,v in top_three_routes:
             db_response = dynamodb.get_item(
                     TableName = TABLE,
                     Key={
