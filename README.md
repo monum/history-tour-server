@@ -13,7 +13,7 @@ T Tours is an audio tour application that highlights sites visible from MBTA's (
 `history-tour-server` is used to maintain the backend APIs and the infrastructure stack for the T Tours application.
 
 ## How It Works
-![history-tour-server Architecture](architecture/architecture.png)
+![history-tour-server Architecture](architecture/architecture_update.png)
 
 This project uses **AWS API Gateway**, **AWS Lambda**, **AWS S3**, and **AWS DynamoDB** to implement a serverless backend architecture in order to reduce maintenance overhead and make it as low cost as possible. **API Gateway** provides the HTTP endpoint, and **AWS Lamda** handles requests to that endpoint. 
 
