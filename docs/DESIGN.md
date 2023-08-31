@@ -129,8 +129,6 @@ TourStop: {
     * returns all routes whose `routeName`s contain `query`
     * example: `https://<your-api-endpoint>/route-search?query=44`
 
-### Data Model 
-
 ## API Design - Future
 
 ### Descriptions
