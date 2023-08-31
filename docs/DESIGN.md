@@ -64,7 +64,7 @@ This is a POC (Proof of Concept) of this app.
 ### Web App vs. Mobile App
 
 A mobile app provides a better user experience:
- * Users access the app by tapping on an easy-to-remember icon versus having to remember a   URL
+ * Users access the app by tapping on an easy-to-remember icon versus having to remember a URL
  * Users can access the audio content offline
 
 Mobile apps support both iOS and Android separately, which adds development time. The benefits outweigh this extra expense. 
@@ -82,33 +82,165 @@ This project uses AWS API Gateway, AWS Lambda, AWS S3, and AWS DynamoDB to imple
 
 The data is easily modeled through a JSON structure, which is natively supported by a NoSQL database.  
 
-## API Design
+## API Design - MVP
 
-### Definitions
+### Descriptions
 
 * Route - the path defined by MBTA
-  * A route has at least one tour
-  * Every tour lies along a bus route 
-  * One tour per route
-* Tour - a collection of locations and their associated audio; a mapping from location to audio 
+  * Each bus route has exactly one tour
+* Tour - a collection of locations and their associated audio; a mapping from location to audio
+* All byte arrays will be passed to the frontend as S3 presigned URLs
 
 ### Data Types
+```
+GpsCoordinate: (x: float, y: float)
 
+Route: {
+  routeName: string
+  tourStops: Array<TourStop>
+  direction: string
+}
+
+TourStop: {
+  siteName: string
+  description: string
+  author: string
+  audioFile: Array<Byte>
+  images: Array<Array<Byte>>
+  siteAddress: string
+  gpsCoordinate: GpsCoordinate
+}
+```
 
 ### Methods
 * `getRoute(routeName: string): Route`
+    * returns the route that has the name `routeName`
+    * example: `https://<your-api-endpoint>/get-route?routeName=44`
 * `getTour(routeName:string):Array<TourStop>`
-* `getTourStop(location: GpsCoordinate): TourStop`
+    * returns a list of tour stops on the route with name `routeName`
+    *  example: `https://<your-api-endpoint>/get-route?routeName=44`
+* `getTourStop(routeName:string, location: GpsCoordinate): TourStop`
+    * returns the tour stop on route with name `routeName` and with the shortest distance between the tour stop's `gpsCoordinate` and `location`
+    *  example: `https://<your-api-endpoint>/get-tour-stop?routeName=44&latitude=42.331176&longitude=-71.091218`
 * `toursNearLocation(location: GpsCoordinate): Array<Route>`
-* `routeSearch(query: string): Array<Route>` 
+    * returns the top three closest routes to `location`, where the distance to the route is the distance to the route's closest tour stop
+    * example: `https://<your-api-endpoint>/tours-near-location?latitude=42.331176&longitude=-71.091218`
+* `routeSearch(query: string): Array<Route>`
+    * returns all routes whose `routeName`s contain `query`
+    * example: `https://<your-api-endpoint>/route-search?query=44`
 
-### Data Model
+### Data Model 
+
+## API Design - Future
+
+### Descriptions
+
+* Route - the path defined by MBTA
+  * Each bus route has at least one tour
+* Tour - a collection of locations and their associated audio; a mapping from location to audio
+* All byte arrays will be passed to the frontend as S3 presigned URLs
+
+### Data Types
+```
+GpsCoordinate: (x: float, y: float)
+
+Route: {
+  routeName: string
+  tours: Array<Tour>
+  direction: string
+}
+
+Tour: {
+  tourName: string
+  tourStops: Array<TourStop>
+}
+
+TourStop: {
+  siteName: string
+  description: string
+  author: string
+  audioFile: Array<Byte>
+  images: Array<Array<Byte>>
+  siteAddress: string
+  gpsCoordinate: GpsCoordinate
+}
+
+// UserStory is converted to TourStop once it's approved and siteAddress is converted to gpsCoordinate
+UserStory: {
+  name: string
+  email: string
+  audioFile: Array<Byte>
+  images: Array< Array<Byte>>
+  siteName: string
+  siteAddress: string
+}
+```
+
+### Methods
+
+`submitStory(userStory: UserStory): void`
+* adds story to unapproved stories table
+
+#### User-Facing 
+* `getRoute(routeName: string): Route`
+    * returns the route that has the name `routeName`
+    * example: `https://<your-api-endpoint>/get-route?routeName=44`
+* `getTour(routeName:string):Array<TourStop>`
+    * returns a list of tour stops on the route with name `routeName`
+    *  example: `https://<your-api-endpoint>/get-route?routeName=44`
+* `getTourStop(routeName:string, location: GpsCoordinate): TourStop`
+    * returns the tour stop on route with name `routeName` and with the shortest distance between the tour stop's `gpsCoordinate` and `location`
+    *  example: `https://<your-api-endpoint>/get-tour-stop?routeName=44&latitude=42.331176&longitude=-71.091218`
+* `toursNearLocation(location: GpsCoordinate): Array<Route>`
+    * returns the top three closest routes to `location`, where the distance to the route is the distance to the route's closest tour stop
+    * example: `https://<your-api-endpoint>/tours-near-location?latitude=42.331176&longitude=-71.091218`
+* `routeSearch(query: string): Array<Route>`
+    * returns all routes whose `routeName`s contain `query`
+    * example: `https://<your-api-endpoint>/route-search?query=44`
+
+#### Admin-Facing 
+* `approveStory(storyName:string): void`
+    * adds story to approved stories table and removes story from unapproved stories table
+* `createTour(routeName: string, tourName: string, userStories: Array<UserStory>): void)`
+    * creates a tour with name `tourName` and tour stops from `userStories` and adds that tour to the route in the route table with name `routeName`
 
 ## Architecture
 
+![history tour architecture](../architecture/architecture_update.png)
 
-### Components 
+### Components
+
+* `Client` - End user's app
+* `User-Facing API Gateway` - provides API endpoints for `getRoute`, `getTour`, `getTourStop`, `toursNearLocation`, `routeSearch`, `submitStory`
+* `Admin-Facing API Gateway` - provides API endpoints for `approveStory`, `createTour`, and `submitStory`
+* `Client (MONUM staff)` - admin portal user
+
+#### User-Facing Lambda Functions
+
+* `getRoute` - implements `getRoute`
+* `getTour` - implements `getTour`
+* `getTourStop` - implements `getTourStop`
+* `toursNearLocation` - implements `toursNearLocation`
+* `routeSearch` - implements `routeSearch`
+* `submitStory` - implements `submitStory`
+
+#### Storage
+
+* `S3 - Story Assets (Unapproved)` - S3 Bucket that holds images and audio associated with unapproved `UserStory`s
+* `S3 - Story Assets (Approved)` - S3 Bucket that holds images and audio associated with approved `UserStory`s
+* `DynamoDB`
+  * `Route Table` - holds all `Route`s available to end users
+  * `Unapproved User Story Table` - holds `UserStory`s that have not been approved
+  * `Approved User Story Table` - holds `UserStory`s that have been approved
+
+#### Admin-Facing Lambda Functions
+
+* `approveStory` - implements `approveStory`
+* `createTour` - implements `createTour`
+* `submitStory` - implements `submitStory`
 
 ## Future Work
 
-## Some Thoughts
+* Implement future API to add support for multi-tour routes and an admin portal
+* Create web app for the admin portal
+* Create a mobile app that uses this backend
