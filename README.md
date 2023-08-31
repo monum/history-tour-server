@@ -25,5 +25,5 @@ This project uses **AWS API Gateway**, **AWS Lambda**, **AWS S3**, and **AWS Dyn
 2. Clone this repository
 3. [Install the AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) for typescript by running `npm install aws-cdk-lib`
 4. Run `cdk deploy` from the root of this repository. **AWS CDK** outputs the API endpoint when successfully called
-5. Refer to the [design doc](doc/DESIGN.md) to add valid entries to DynamoDB and S3
+5. Refer to the [design doc](docs/DESIGN.md) to add valid entries to DynamoDB and S3
 6. Use API endpoint from Step 4 to make requests
