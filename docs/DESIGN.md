@@ -43,7 +43,7 @@ We will raise ridership by creating a new mobile app that will satisfy the follo
   * Site address
   * Email
 * A transcription is available for each audio file.
-* MONUM staff member should be able to:
+* MONUM staff members should be able to:
   * Upload new content
   * Approve content 
   * Create new tours
