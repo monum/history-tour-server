@@ -22,8 +22,16 @@ This project uses **AWS API Gateway**, **AWS Lambda**, **AWS S3**, and **AWS Dyn
 ## Using this Repository
 
 1. [Setup an AWS account](https://docs.aws.amazon.com/accounts/latest/reference/welcome-first-time-user.html) if you don't already have one
-2. Clone this repository
+2. Clone this repository by running `git clone https://github.com/monum/history-tour-server.git`
 3. [Install the AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) for typescript by running `npm install aws-cdk-lib`
 4. Run `cdk deploy` from the root of this repository. **AWS CDK** outputs the API endpoint when successfully called
-5. Refer to the [design doc](docs/DESIGN.md) to add valid entries to DynamoDB and S3
-6. Use API endpoint from Step 4 to make requests
+5. Refer to the data types section of the [design doc](docs/DESIGN.md) to add valid entries to DynamoDB and S3
+6. Use the API endpoint from Step 4 to make requests
+
+## Future Work
+* Implement future API to add support for multi-tour routes and an admin portal
+* Create web app for the admin portal
+* Create a mobile app that uses this backend
+
+## License 
+### MIT License
