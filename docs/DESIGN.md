@@ -36,14 +36,14 @@ We will raise ridership by creating a new mobile app that will satisfy the follo
   * If they are playing audio and they enter the start zone for a different audio file, that audio will not start playing until the current audio is complete.
 * Users can view a list of all stories associated with the tour (preview route).
 * Users can view a zoomable map. The map shows their location and the points along the route, connected by a thick line.
-* User is given the option to upload stories and provide:
+* Users are given the option to upload stories and provide:
   * Name
   * Audio
   * Images
   * Site address
   * Email
 * A transcription is available for each audio file.
-* Monum staff member should be able to:
+* MONUM staff member should be able to:
   * Upload new content
   * Approve content 
   * Create new tours
