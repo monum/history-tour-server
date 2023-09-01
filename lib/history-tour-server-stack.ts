@@ -45,31 +45,51 @@ export class HistoryTourServerStack extends Stack {
     const getRoute = new lambda.Function(this, 'GetRouteHandler', {
       runtime: lambda.Runtime.PYTHON_3_7,    // execution environment
       code: lambda.Code.fromAsset('lambda/main'),
-      handler: 'get_route.handler'                
+      handler: 'get_route.handler',
+      environment: {
+        BUCKET: tourAssetsBucket.bucketName,
+        TABLE: routeTable.tableName
+      }              
     });
 
     const getTourStop = new lambda.Function(this, 'GetTourStopHandler', {
       runtime: lambda.Runtime.PYTHON_3_7,    
       code: lambda.Code.fromAsset('lambda/main'),
-      handler: 'get_tour_stop.handler'                
+      handler: 'get_tour_stop.handler',
+      environment: {
+        BUCKET: tourAssetsBucket.bucketName,
+        TABLE: routeTable.tableName
+      }          
     });
 
     const getTour = new lambda.Function(this, 'GetTourHandler', {
       runtime: lambda.Runtime.PYTHON_3_7,    
       code: lambda.Code.fromAsset('lambda/main'),  
-      handler: 'get_tour.handler'                
+      handler: 'get_tour.handler',
+      environment: {
+        BUCKET: tourAssetsBucket.bucketName,
+        TABLE: routeTable.tableName
+      }            
     });
 
     const toursNearLocation = new lambda.Function(this, 'ToursNearLocationHandler', {
       runtime: lambda.Runtime.PYTHON_3_7,    
       code: lambda.Code.fromAsset('lambda/main'),  
-      handler: 'tours_near_location.handler'                
+      handler: 'tours_near_location.handler',
+      environment: {
+        BUCKET: tourAssetsBucket.bucketName,
+        TABLE: routeTable.tableName
+      }                 
     });
 
     const routeSearch = new lambda.Function(this, 'RouteSearchHandler', {
       runtime: lambda.Runtime.PYTHON_3_7,    
       code: lambda.Code.fromAsset('lambda/main'),  
-      handler: 'route_search.handler'                
+      handler: 'route_search.handler',
+      environment: {
+        BUCKET: tourAssetsBucket.bucketName,
+        TABLE: routeTable.tableName
+      }          
     });
 
     // path name https://{createdId}.execute-api.{region}.amazonaws.com/prod/get-route
@@ -101,10 +121,5 @@ export class HistoryTourServerStack extends Stack {
     tourAssetsBucket.grantRead(getTour);
     tourAssetsBucket.grantRead(toursNearLocation);
     tourAssetsBucket.grantRead(routeSearch);
-
-
-
-    //TODO: add rest of lambda functions and their paths
-
   }
 }
