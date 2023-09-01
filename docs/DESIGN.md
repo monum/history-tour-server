@@ -205,7 +205,7 @@ UserStory: {
 
 ## Architecture
 
-![history tour architecture](../architecture/architecture_update.png)
+![history tour architecture](../architecture/architecture.png)
 
 ### Components
 
