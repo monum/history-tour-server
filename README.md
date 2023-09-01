@@ -6,7 +6,7 @@ Backend APIs and AWS infrastructure for the T Tours application.
 
 ## T Tours
 
-T Tours is an audio tour application that highlights sites visible from MBTA's (Massachusetts Bay Transportation Authority) public transportation routes. Each tour consists of a mixture of crowd-sourced audio clips produced by Bostonians and MONUM's staff members. As the user moves along the route, the audio will automatically play based on their location. This immersive experience is enhanced with historical images, the address, and an audio transcription.
+T Tours is an audio tour application that highlights sites visible from MBTA's (Massachusetts Bay Transportation Authority) public transportation routes. Each tour consists of a mixture of crowd-sourced audio clips produced by Bostonians and MONUM staff members. As the user moves along the route, the audio will automatically play based on their location. This immersive experience is enhanced with historical images, the address, and an audio transcription.
 
 ## About
 
@@ -34,4 +34,4 @@ This project uses **AWS API Gateway**, **AWS Lambda**, **AWS S3**, and **AWS Dyn
 * Create a mobile app that uses this backend
 
 ## License 
-### MIT License
+#### MIT License
