@@ -27,11 +27,11 @@ export class HistoryTourServerStack extends Stack {
     });
 
     new dynamodb.Table(this, 'ApprovedUserStoryTable', {
-      partitionKey: { name: 'uniqueIdentifier', type: dynamodb.AttributeType.STRING }
+      partitionKey: { name: 'storyId', type: dynamodb.AttributeType.STRING }
     });
 
     new dynamodb.Table(this, 'UnapprovedUserStoryTable', {
-      partitionKey: { name: 'uniqueIdentifier', type: dynamodb.AttributeType.STRING }
+      partitionKey: { name: 'storyId', type: dynamodb.AttributeType.STRING }
     });
 
     // create endpoint with api gateway
