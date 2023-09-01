@@ -155,6 +155,7 @@ Tour: {
 }
 
 TourStop: {
+  storyId: string
   siteName: string
   description: string
   author: string
@@ -166,6 +167,7 @@ TourStop: {
 
 // UserStory is converted to TourStop once it's approved and siteAddress is converted to gpsCoordinate
 UserStory: {
+  storyId: string
   name: string
   email: string
   audioFile: Array<Byte>
@@ -209,7 +211,7 @@ UserStory: {
 
 ### Components
 
-* `Client` - End user's app
+* `Client (App User)` - End user's app
 * `User-Facing API Gateway` - provides API endpoints for `getRoute`, `getTour`, `getTourStop`, `toursNearLocation`, `routeSearch`, `submitStory`
 * `Admin-Facing API Gateway` - provides API endpoints for `approveStory`, `createTour`, and `submitStory`
 * `Client (MONUM staff)` - admin portal user
