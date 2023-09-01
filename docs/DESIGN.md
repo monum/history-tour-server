@@ -5,7 +5,7 @@ In fiscal 2024, the T (MBTA) projects that ratio [will be only 18.7% compared to
 
 According to the MBTA Advisory Board, "Fare increases reduce ridership, and the MBTA's mission must be to attract riders right now." 
 
-Therefore, the T needs other ways to raise ridership. 
+Therefore, the T needs other ways to increase ridership. 
 
 ## Requirements
 
@@ -14,34 +14,35 @@ We will raise ridership by creating a new mobile app that will satisfy the follo
 ### User Experience 
 * A set of audio tours in partnership with the MBTA
 * Accessible via a free mobile application – user downloads the app for free
-* There would be at least one tour per route
-* Each tour would focus on sites visible from the windows or within walking distance from stops, especially in the case of the subway portions of the routes
-* The content of the tours would be a mixture of crowd-sourced audio clips from Bostonians and clips produced by a MONUM staff member.  (add crowd-sourced content, fact-checked by a MONUM staffer.) 
+* There will be at least one tour per route.
+* Each tour would focus on sites visible from the windows or within walking distance from the bus stops.
+* The content of the tours would be a mixture of crowd-sourced audio clips from Bostonians and clips produced by a MONUM staff member.
+* A MONUM staffer will fact-check crowd-sourced content.
 * Audio is accompanied by a visual, an address, and transcription
-* The clips will be rotated out on the first day of each month.
+* A MONUM staffer will rotate the clips on the first day of each month.
 
 ### Frontend  
-* User is able to search for different routes
+* Users can search for different routes.
 * Home page displays tours near you
-* Audio begins to play when a user enters one of the locations defined in the tour 
-* A photo will appear along with the audio accompanied by brief text description and information about location and audio author 
-* User should access to full audio player 
+* Audio begins to play when a user enters one of the locations defined in the tour. 
+* A photo will appear along with the audio, accompanied by a brief text description and information about the location and audio author. 
+* Users have access to a complete audio player. 
 * When the user hits pause, the audio pauses
-* When the user hits play,
-    If the user has not finished current audio, it finishes current audio despite location
-    If the user finished last audio, it begins playing the next available audio based on their location 
-* The user can enable or disable autoplay by pressing a button. When autoplay is enabled, the following happens:
-  * If the user is not playing any audio and they enter the “start zone” for an audio file, that audio will start playing
-  * If they are playing audio and they enter the start zone for a different audio file, that audio will not start playing until the current audio is complete
-* User is able to view a list of all stories associated with tour (preview route)
-* User can view a zoomable map. The map shows their location and the different points along the route, connected by a thick line
-* User is given the option to upload stories and provide
+* When the user hits play:
+    * If the user has not finished the current audio, it ends the current audio despite the location.
+    * If the user completes the last audio, it plays the next available audio based on location.
+* The user can turn autoplay on or off by pressing a button. When autoplay is enabled, the following happens:
+  * If the user is not playing any audio and they enter the “start zone” for an audio file, that audio will start playing.
+  * If they are playing audio and they enter the start zone for a different audio file, that audio will not start playing until the current audio is complete.
+* Users can view a list of all stories associated with the tour (preview route).
+* Users can view a zoomable map. The map shows their location and the points along the route, connected by a thick line.
+* User is given the option to upload stories and provide:
   * Name
   * Audio
   * Images
-  * Address of location
+  * Site address
   * Email
-* Transcription available for audio tours
+* A transcription is available for each audio file.
 * Monum staff member should be able to:
   * Upload new content
   * Approve content 
@@ -225,7 +226,7 @@ UserStory: {
 #### Storage
 
 * `S3 - Story Assets (Unapproved)` - S3 Bucket that holds images and audio associated with unapproved `UserStory`s
-* `S3 - Story Assets (Approved)` - S3 Bucket that holds images and audio associated with approved `UserStory`s
+* `S3 - Tour Assets (Approved)` - S3 Bucket that holds images and audio associated with approved `UserStory`s
 * `DynamoDB`
   * `Route Table` - holds all `Route`s available to end users
   * `Unapproved User Story Table` - holds `UserStory`s that have not been approved
